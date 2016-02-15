@@ -32,6 +32,10 @@ Adafruit_BMP280::Adafruit_BMP280(int8_t cspin)
   : _cs(cspin), _mosi(-1), _miso(-1), _sck(-1)
 { }
 
+Adafruit_BMP280::Adafruit_BMP280(int8_t SDA, int8_t SCL)
+  : _cs(-1), _mosi(SDA), _miso(SCL), _sck(-1)
+{ }
+
 Adafruit_BMP280::Adafruit_BMP280(int8_t cspin, int8_t mosipin, int8_t misopin, int8_t sckpin)
   : _cs(cspin), _mosi(mosipin), _miso(misopin), _sck(sckpin)
 { }
@@ -42,7 +46,12 @@ bool Adafruit_BMP280::begin(uint8_t a) {
 
   if (_cs == -1) {
     // i2c
-    Wire.begin();
+    if (_mosi == -1) {
+      Wire.begin();
+    } else {
+      //_mosi and _miso used to keep user defined SDA- and SCL-pins when i2c is used:
+      Wire.begin(_mosi, _miso);
+    }
   } else {
     digitalWrite(_cs, HIGH);
     pinMode(_cs, OUTPUT);
