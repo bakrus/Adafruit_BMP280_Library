@@ -25,7 +25,11 @@
 #define BMP_MOSI 11 
 #define BMP_CS 10
 
+#define BMP_SDA 2
+#define BMP_SCL 0
+
 Adafruit_BMP280 bme; // I2C
+//Adafruit_BMP280 bme(BMP_SDA, BMP_SCL); // I2C, typically used for ESP8266-01
 //Adafruit_BMP280 bme(BMP_CS); // hardware SPI
 //Adafruit_BMP280 bme(BMP_CS, BMP_MOSI, BMP_MISO,  BMP_SCK);
   
